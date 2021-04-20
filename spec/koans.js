@@ -96,21 +96,21 @@ describe('the JavaScript language', () => {
     it('concatenate arrays - well, kind of', () => {
       const a = [1, 2, 3];
       const b = [4, 5, 6];
-console.log(a+b)//Porque
+//console.log(a+','+b)//Porque
       expect(a + b).toEqual('1,2,34,5,6');
     });
 
     it('joins arrays and strings', () => {
       const a = [1, 2, 3];
       console.log("1"+a)//Porque
-      expect ("1" + a).toEqual('11,2,3');
+     // expect("1" + a).toEqual('11,2,3');
       expect(a + "1").toEqual('1,2,31');
     });
 
     it('joins arrays and other things', () => {
       const a = [1, 2, 3];
       const b = ['x', 'y', 'z'];
-console.log(1+a) //poruqe comillas
+//console.log(1+a) //poruqe comillas
       expect(1 + a).toEqual("11,2,3");
       expect(a + 1).toEqual("1,2,31");
       expect(1 + b).toEqual("1x,y,z");
@@ -167,7 +167,7 @@ console.log(1+a) //poruqe comillas
         // write the missing code here
         return [arrayfunct=(num) =>{return [num,num*10]}]
       }
-console.log(example()[0](1)[1])
+//console.log(example()[0](1)[1])
       expect(example()[0](1)[1]).toEqual(10);
     });
 
@@ -188,13 +188,12 @@ console.log(example()[0](1)[1])
         return exampleB(1);
       };
 
-      expect(exampleA()).toEqual(1);
-
-      const exampleB = function(arg1) {
+       const exampleB = function(arg1) {
         return arg1;
       };
+      expect(exampleA()).toEqual(1);
     });
-//--------------------------------------------------------------------------
+
     it('can use optional parameters', () => {
       function example(a, b, c) {
         if (c) {
@@ -203,16 +202,16 @@ console.log(example()[0](1)[1])
         return a + b;
       }
 
-      //expect(example(1,1,1)).toBe();
-      //expect(example(1,1)).toBe();
+      expect(example(1,1,1)).toBe(3);
+      expect(example(1,1)).toBe(2);
     });
 
     it('anonymous functions are anonymous', () => {
       const x = function z() {
         return 1;
       };
-      //expect(typeof(z)).toEqual();
-      //expect(x()).toEqual();
+      expect(typeof(z)).toEqual('undefined');
+      expect(x()).toEqual(1);
     });
 
     it('can create closures with free variables', () => {
@@ -226,7 +225,7 @@ console.log(example()[0](1)[1])
         return internal();
       }
 
-      //expect(external()).toBe();
+      expect(external()).toBe(2);
     });
 
     it('can create closures with several free variables', () => {
@@ -240,7 +239,7 @@ console.log(example()[0](1)[1])
         }
       }
 
-      //expect(external()).toBe(6);
+      expect(external()).toBe(undefined);
     });
 
     it('defines a pure function when there are no free variables', () => {
@@ -256,17 +255,21 @@ console.log(example()[0](1)[1])
         return internal(4, 4);
       }
 
-      //expect(external()).toBe();
+      expect(external()).toBe(9);
     });
 
     it('may return arrays that contains closures and so on', () => {
       function example() {
-        // write the missing code here
-      }
+        return [(number) => [number,number+9],]
 
-      //expect(example()[0](1)[1]).toEqual(10);
-      //expect(example()[0](2)[1]).toEqual(11);
-      //expect(example()[0](3)[1]).toEqual(12);
+        }
+         
+        // write the missing code here
+      
+
+      expect(example()[0](1)[1]).toEqual(10);
+      expect(example()[0](2)[1]).toEqual(11);
+      expect(example()[0](3)[1]).toEqual(12);
     });
 
     it('passes primitive types as values (a copy) to functions', () => {
@@ -279,13 +282,13 @@ console.log(example()[0](1)[1])
       const z = true;
 
       example(x);
-      //expect(x).toEqual();
+      expect(x).toEqual(1);
 
       example(y);
-      //expect(y).toEqual();
+      expect(y).toEqual('example');
 
       example(z);
-      //expect(z).toEqual();
+      expect(z).toEqual(true);
     });
 
     it('passes arrays by reference', () => {
@@ -296,7 +299,7 @@ console.log(example()[0](1)[1])
       const x = [1, 2, 3];
 
       example(x);
-      //expect(x).toEqual();
+      expect(x).toEqual([100,2,3]);
     });
 
     it('passes objects by reference', () => {
@@ -307,7 +310,7 @@ console.log(example()[0](1)[1])
       const x = { property: 'cool!' };
 
       example(x);
-      //expect(x).toEqual();
+      expect(x).toEqual({ property: 'test' });
     });
 
     it('may return a function as the result of invoking a function', () => {
@@ -319,9 +322,9 @@ console.log(example()[0](1)[1])
         return add;
       }
 
-      //expect(example()(1,2)).toEqual();
+      expect(example()(1,2)).toEqual(3);
       const f = example();
-      //expect(f(2,2)).toEqual();
+      expect(f(2,2)).toEqual(4);
     });
 
     it('can return closures as a function result', () => {
@@ -332,8 +335,8 @@ console.log(example()[0](1)[1])
       }
 
       const f = plus(5);
-
-      //expect(f(3)).toBe();
+      console.log(f)
+      expect(f(3)).toBe(8);
     });
 
     it('can have functions that receive other functions as arguments', () => {
@@ -345,7 +348,7 @@ console.log(example()[0](1)[1])
         return arg(2, 2) + 1;
       }
 
-      //expect(example(add)).toEqual();
+      expect(example(add)).toEqual(5);
     });
 
     it('may have functions as the input and the output', () => {
@@ -358,8 +361,8 @@ console.log(example()[0](1)[1])
       const f = plus(function() {
         return 1;
       });
-
-      //expect(f(2)).toBe();
+      //expect(plus(function(){return 1})(5).toBe(6);
+      expect(f(5)).toBe(6);
     });
 
     it("can invoke functions indirectly using the special 'call'", () => {
@@ -367,7 +370,7 @@ console.log(example()[0](1)[1])
         return a + b;
       }
 
-      //expect(f.call(f,1,1)).toEqual();
+      expect(f.call(f,1,1)).toEqual(2);
     });
 
     it("can invoke functions indirectly using the special 'apply'", () => {
@@ -375,7 +378,7 @@ console.log(example()[0](1)[1])
         return a + b;
       }
 
-      //expect(f.apply(f, [1,1])).toEqual();
+      expect(f.apply(f, [1,1])).toEqual(2);
     });
 
     it("doesn't have a private scope inside blocks", () => {
@@ -383,9 +386,8 @@ console.log(example()[0](1)[1])
       for (let i = 0; i < 5; i++) {
         j += i;
       }
-
-      //expect(i).toEqual();
-      //expect(j).toEqual();
+      //expect(i).toEqual(undefined);
+      expect(j).toEqual(1+2+3+4);
     });
   });
 
@@ -398,7 +400,7 @@ console.log(example()[0](1)[1])
         }
       };
 
-      //expect(obj.theName()).toBe();
+      expect(obj.theName()).toBe('bob');
     });
 
     it('can create properties dynamically', () => {
@@ -408,26 +410,29 @@ console.log(example()[0](1)[1])
       };
       obj.address = 'palm tree';
 
-      //expect(obj.address).toEqual();
-      //expect(obj['address']).toEqual();
-      //expect(obj['name']).toEqual();
+      expect(obj.address).toEqual('palm tree');
+      expect(obj['address']).toEqual('palm tree');
+      expect(obj['name']).toEqual('bob');
     });
 
     it('may define complex objects', () => {
-      let user;
+      let user = {
+        address: {street: 'sesame'},
+        friends: [{name: 'triki'},]
+
+      };
       // write the contents of the obj to make the satisfy the expectations:
 
-      //expect(user.address.street).toEqual('sesame');
-      //expect(user.friends[0].name).toEqual('triki');
+      expect(user.address.street).toEqual('sesame');
+      expect(user.friends[0].name).toEqual('triki');
     });
 
     it('has a pattern called, the Module Pattern', () => {
       function createObject() {
         let points = 0;
-
         return {
           addPoint: function() {
-            ++points;
+            points++;
           },
           score: function() {
             return points;
@@ -438,21 +443,28 @@ console.log(example()[0](1)[1])
       const obj = createObject();
       obj.addPoint();
 
-      //expect(obj.score()).toEqual();
-      //expect(typeof(obj.points)).toEqual();
+      expect(obj.score()).toEqual(1);
+      expect(typeof(obj.points)).toEqual('undefined');
     });
 
     it('may create objects also with the module pattern', () => {
-      function createObject(initialScore) {
+      function createObject(initialScore,initcolor) {
         // write the code here
-      }
+        points = initialScore
+        return {
+          points:() => points,
+          color: initcolor, 
+          incrementScoreIn: (score) => {
+            return points += score},
+          }
+        }
 
-      /*
+      
       const obj = createObject(5, 'red');
       obj.incrementScoreIn(5);
       expect(obj.color).toEqual('red');
       expect(obj.points()).toEqual(10);
-      */
+      
     });
 
     it('can define constructors', () => {
@@ -465,7 +477,7 @@ console.log(example()[0](1)[1])
       }
 
       const obj = new Obj();
-      //expect(obj.theName()).toBe();
+      expect(obj.theName()).toBe('bob');
     });
 
     it("may contain 'static' methods", () => {
@@ -481,7 +493,7 @@ console.log(example()[0](1)[1])
         return 22;
       };
 
-      //expect(Obj.someStaticMethod()).toBe();
+      expect(Obj.someStaticMethod()).toBe(22);
     });
 
     it('can have have methods in the prototype', () => {
@@ -494,8 +506,11 @@ console.log(example()[0](1)[1])
       };
 
       const obj = new Obj();
-      //expect(obj.theName()).toEqual();
-      //expect(obj.theName).toBe(new Obj().theName);
+      console.log(obj)
+      //expect(obj.prototype.theName()).toEqual(undefined);
+      expect(obj.theName()).toEqual(undefined);
+      console.log(obj.theName)
+      expect(obj.theName).toBe(new Obj().theName);
     });
 
     it('can define a factory', () => {
@@ -511,8 +526,8 @@ console.log(example()[0](1)[1])
       }
 
       const instance = obj();
-      //expect(instance.theName()).toBe();
-      //expect(instance.theName).not.toBe(obj().theName);
+      expect(instance.theName()).toBe('bob');
+      expect(instance.theName).not.toBe(obj().theName);
     });
 
     it('can create methods dynamically on an object instance', () => {
@@ -520,12 +535,13 @@ console.log(example()[0](1)[1])
       const methodNames = ['meow', 'jump'];
 
       for (let i = 0; i < methodNames.length; i++) {
-        obj[[methodNames[i]]] = function() {
+        obj[[[[methodNames[i]]]]] = function() {
           return 'it works';
         };
       }
 
-      //expect(obj.meow()).toEqual();
+console.log(obj)
+      expect(obj.meow()).toEqual('it works');
     });
 
     describe('the polymorphism', () => {
@@ -544,8 +560,8 @@ console.log(example()[0](1)[1])
         Child.prototype = Object.create(Parent.prototype); // prototype chaining
 
         const child = new Child();
-        //expect(child.someMethod()).toEqual();
-        //expect(child.name).toEqual();
+        expect(child.someMethod()).toEqual(10);
+        expect(child.name).toEqual('child');
       });
 
       it('may use the functional inheritance', () => {
@@ -565,7 +581,7 @@ console.log(example()[0](1)[1])
         }
 
         const instance = child();
-        //expect(instance.someMethod()).toBe();
+        expect(instance.someMethod()).toBe(10);
       });
     });
   });
@@ -589,7 +605,7 @@ console.log(example()[0](1)[1])
       myNamespace.addOne();
       myNamespace.addOne();
 
-      //expect(myNamespace.giveMeTheCount()).toBe();
+      expect(myNamespace.giveMeTheCount()).toBe(2);
     });
 
     it("hoists variables the way you probably don't expect", () => {
@@ -603,8 +619,8 @@ console.log(example()[0](1)[1])
         return functions;
       }
 
-      //expect(generate()[0]()).toEqual();
-      //expect(generate()[1]()).toEqual();
+      expect(generate()[0]()).toEqual(0);
+      expect(generate()[1]()).toEqual(1);
     });
   });
 
@@ -662,7 +678,7 @@ console.log(example()[0](1)[1])
         cat.feed();
         cat.feed();
 
-        //expect(cat.kilos).toEqual();
+        expect(cat.kilos).toEqual(3); //SI entiendo
       });
 
       it('works different on detached functions', () => {
@@ -671,15 +687,15 @@ console.log(example()[0](1)[1])
 
         feed();
 
-        //expect(window.kilos).toEqual();
-        //expect(cat.kilos).toEqual();
+        expect(window.kilos).toEqual(11);
+        expect(cat.kilos).toEqual(1); //No entiendo
       });
 
       it('can be bound explicitly with CALL and APPLY', () => {
         const feed = cat.feed;
         feed.apply(cat);
 
-        //expect(cat.kilos).toEqual();
+        expect(cat.kilos).toEqual(2); //No entiendo
       });
 
       it('can be bound in modern browsers with BIND', () => {
@@ -688,7 +704,7 @@ console.log(example()[0](1)[1])
 
         bound();
 
-        //expect(cat.kilos).toEqual();
+        expect(cat.kilos).toEqual(2); //No entiendo
       });
 
       it('works different when function is attached to other object', () => {
@@ -697,8 +713,8 @@ console.log(example()[0](1)[1])
         otherCat.feed = cat.feed;
 
         otherCat.feed();
-        //expect(otherCat.kilos).toEqual();
-        //expect(cat.kilos).toEqual();
+        expect(otherCat.kilos).toEqual(11); //No entiendo
+        expect(cat.kilos).toEqual(1); //No entiendo
       });
 
       it('can be handled using the SELF trick', () => {
@@ -707,7 +723,7 @@ console.log(example()[0](1)[1])
 
         lion.hunt();
 
-        //expect(lion.energy).toEqual();
+        expect(lion.energy).toEqual(185);//No entiendo
       });
 
       it('interprets the THIS when the function is executed', () => {
@@ -719,7 +735,7 @@ console.log(example()[0](1)[1])
         };
         lion.hunt();
 
-        //expect(lion.energy).toEqual();
+        expect(lion.energy).toEqual();
       });
     });
   });
